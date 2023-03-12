@@ -1,19 +1,21 @@
 .container {
   display: flex;
   position: relative;
-  width: 20em;
+  width: 23em;
   min-height: 1.5em;
-  border: 0.05em solid #777;
+  border: 0.05em solid #a4c3b2;
   gap: 0.5em;
   padding: 0.5em;
   border-radius: 0.25em;
   outline: none;
+  font-size: 1.1em;
+  background-color: #ffffff;
+  justify-content: center;
   align-items: center;
-  font-size: 1.2em;
 }
 
 .container:focus {
-  border-color: chartreuse;
+  border: 0.1em solid #6b9080;
 }
 
 .value {
@@ -76,10 +78,10 @@
   cursor: pointer;
 }
 .option.selected {
-  background-color: rgb(77, 52, 187);
+  background-color: #a4c3b2;
 }
 .option.highlighted {
-  background-color: aquamarine;
+  background-color: #6b9080;
   color: white;
 }
 
@@ -97,7 +99,7 @@
 }
 .optionsBadge:hover,
 .optionsBadge:focus {
-  background-color: #fdeda4ad;
+  background-color: #eaf4f4;
   border: 0.05em solid white;
 }
 

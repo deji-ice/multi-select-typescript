@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Select, SelectOptions } from "./Select";
+import styles from "./body.module.css";
 
 const options = [
   { label: "first", value: 1 },
@@ -17,16 +18,10 @@ function App() {
 
   return (
     <div
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    className={styles.body}>
       <div>
-        <h1>A Select Option component </h1>
-        <i>made with Typescript, reactJs and CSS modules</i>
+        <h1 className={styles.header}>A Multi Select Option Component</h1>
+        <p className={styles.subheader}>Made with Typescript, ReactJS and CSS modules</p>
       </div>
       <Select
         multi
