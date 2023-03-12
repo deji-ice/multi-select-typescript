@@ -3,80 +3,109 @@
   position: relative;
   width: 20em;
   min-height: 1.5em;
-  border: .05em solid #777;
+  border: 0.05em solid #777;
   gap: 0.5em;
-  padding: .5em;
+  padding: 0.5em;
   border-radius: 0.25em;
   outline: none;
   align-items: center;
-  font-size: 1.2em
+  font-size: 1.2em;
 }
 
-.container:focus{
-    border-color: chartreuse;
+.container:focus {
+  border-color: chartreuse;
 }
 
-.value{
-    flex-grow: 1;
+.value {
+  flex-grow: 1;
+  display: flex;
+  gap: 0.5em;
+  flex-wrap: wrap;
 }
 
-.clear-btn{
-    background:none;
-    padding: 0;
-    font-size: 1.2em;
-    outline:none;
-    border:none;
-    cursor: pointer;
-    color: #777;
+.clear-btn {
+  background: none;
+  padding: 0;
+  font-size: 1.2em;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: #777;
 }
 
-.clear-btn:focus, .clear-btn:hover{
-    color: #b90000;
+.clear-btn:focus,
+.clear-btn:hover {
+  color: #b90000;
 }
 
-.divider{
-    background-color: #777;
-    align-self: stretch;
-    width: .05em;
+.divider {
+  background-color: #777;
+  align-self: stretch;
+  width: 0.05em;
 }
 
-.carat{
-    border: 0.25em solid transparent;
-        border-top-color: #777;
-        translate: 0 25%;
+.carat {
+  border: 0.25em solid transparent;
+  border-top-color: #777;
+  translate: 0 25%;
 }
 
-.options{
-margin: 0;
-padding: 0;
-list-style: none;
-max-height: 11em;
-overflow-y: auto;
-display: none;
-border-radius: 0.25em;
-border:.05em solid #777;
-width: 100%;
-position: absolute;
-left: 0;
-top: calc(100% + 0.25em);
-background-color: #fff;
-z-index: 100;
+.options {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 11em;
+  overflow-y: auto;
+  display: none;
+  border-radius: 0.25em;
+  border: 0.05em solid #777;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.25em);
+  background-color: #fff;
+  z-index: 100;
 }
 
 .options.show {
-    display: block;
+  display: block;
 }
 
-.option{
-    padding: .25em .5em;
-    cursor: pointer;
+.option {
+  padding: 0.25em 0.5em;
+  cursor: pointer;
 }
-.option.selected{
-    background-color: rgb(77, 52, 187);
+.option.selected {
+  background-color: rgb(77, 52, 187);
+}
+.option.highlighted {
+  background-color: aquamarine;
+  color: white;
+}
 
+.optionsBadge {
+  display: flex;
+  border-radius: 0.25em;
+  background: none;
+  outline: none;
+  gap: 0.25em;
+  padding: 0.35em 0.55em;
+  border: 0.05em solid #777;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.65em;
 }
-.option.highlighted{
-    background-color: aquamarine;
-    color: white;
+.optionsBadge:hover,
+.optionsBadge:focus {
+  background-color: #fdeda4ad;
+  border: 0.05em solid white;
 }
 
+.optionsBadge:hover > .remove-button,
+.optionsBadge:focus > .remove-button {
+  color: rgb(255, 8, 8);
+}
+
+.optionsBadge:hover > .remove-button {
+  font-size: 1.25em;
+}

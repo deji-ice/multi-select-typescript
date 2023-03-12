@@ -1,32 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./select.module.css";
 
-type SelectOptions = {
+export type SelectOptions = {
   label: string;
   value: string | number;
 };
 
-type SelectProps = {
-  options: SelectOptions[];
-  value?: SelectOptions | undefined;
+type MultiSelectProps = {
+  value: SelectOptions[];
+  multi: true;
+  onChange: (value: SelectOptions[]) => void;
+};
+
+type SingleSelectProps = {
+  multi?: false;
+  value?: SelectOptions;
   onChange: (value: SelectOptions | undefined) => void;
 };
 
-export const Select = ({ value, onChange, options }: SelectProps) => {
+type SelectProps = {
+  options: SelectOptions[];
+} & (MultiSelectProps | SingleSelectProps);
+
+export const Select = ({ multi, value, onChange, options }: SelectProps) => {
   const [show, setShow] = useState<boolean>(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
-  const isOptionSelected = (option: SelectOptions) => {
-    return option === value;
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const clearOption = () => {
-    onChange(undefined);
+    multi ? onChange([]) : onChange(undefined);
   };
 
-  const selectOptions = (options: SelectOptions) => {
-    if (options !== value) {
-      onChange(options);
+  const selectOptions = (option: SelectOptions) => {
+    if (multi) {
+      if (value.includes(option)) {
+        onChange(value.filter((o) => o !== option));
+      } else {
+        onChange([...value, option]);
+      }
+    } else {
+      onChange(option);
     }
+  };
+
+  const isOptionSelected = (option: SelectOptions) => {
+    return multi ? value.includes(option) : option === value;
   };
 
   useEffect(() => {
@@ -35,15 +53,65 @@ export const Select = ({ value, onChange, options }: SelectProps) => {
     }
   }, [show]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target !== containerRef.current) return;
+      switch (e.code) {
+        case "Enter":
+        case "Space":
+          setShow((prev) => !prev);
+          if (show) selectOptions(options[highlightedIndex]);
+          break;
+        case "ArrowUp":
+        case "ArrowDown": {
+          if (!show) {
+            setShow(true);
+            break;
+          }
+
+          const newValue = highlightedIndex + (e.code === "ArrowDown" ? 1 : -1);
+          if (newValue >= 0 && newValue < options.length) {
+            setHighlightedIndex(newValue);
+          }
+          break;
+        }
+        case "Escape":
+          setShow(false);
+          break;
+      }
+    };
+    containerRef.current?.addEventListener("keydown", handler);
+
+    return () => {
+      containerRef.current?.removeEventListener("keydown", handler);
+    };
+  }, [show, highlightedIndex, options]);
   return (
     <>
       <div
+        ref={containerRef}
         onClick={() => setShow((prev) => !prev)}
         onBlur={() => setShow(false)}
         tabIndex={0}
         className={styles.container}
       >
-        <span className={styles.value}>{value?.label}</span>
+        <span className={styles.value}>
+          {multi
+            ? value.map((item) => (
+                <button
+                  key={item.value}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    selectOptions(item);
+                  }}
+                  className={styles.optionsBadge}
+                >
+                  {item.label}{" "}
+                  <span className={styles["remove-button"]}>&times;</span>
+                </button>
+              ))
+            : value?.label}
+        </span>
         <button
           onClick={(e) => {
             e.stopPropagation();
