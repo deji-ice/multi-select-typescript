@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
 
 const Tests = () => {
-  return (
-    <div>Tests</div>
-  )
-}
+  const loggedInUsername: string = "Oby";
 
-export default Tests
+  const users = [
+    { name: "Oby", age: 12 },
+    { name: "Heera", age: 32 },
+  ];
+
+  const loggedInUser = users.find((u) => u.name === loggedInUsername);
+  console.log(loggedInUser?.age);
+  const message = "Hello World!";
+  console.log();
+  console.log(message.toLowerCase());
+  return <div className="flex flex-col items-center">Tests</div>;
+};
+
+export default Tests;
